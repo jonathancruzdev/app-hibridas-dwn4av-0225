@@ -1,9 +1,23 @@
 [
   {
-    "name": "Teclado dos",
-    "description": "Teclado Mecánico",
-    "price": 25000,
-    "stock": 25,
-    "id": "73e7b008-19b6-49c5-b989-570b0bbe5fce"
+    "id": "bc2c80a2-3e84-4138-8c6a-caa487904141",
+    "name": "Teclado Mec",
+    "description": "Teclado RGB",
+    "price": 15000,
+    "stock": 5
+  },
+  {
+    "id": "8d0ffe35-d600-45b3-a10a-fb0597791bf4",
+    "name": "Mouse",
+    "description": "Gamer",
+    "price": 12000,
+    "stock": 20
+  },
+  {
+    "id": "ecbec5c5-c6a3-44b7-9077-e2f3f0a34a5e",
+    "name": "Web Cam",
+    "description": "HD",
+    "price": 30000,
+    "stock": 50
   }
 ]

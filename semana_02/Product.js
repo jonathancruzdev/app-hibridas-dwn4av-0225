@@ -1,40 +1,65 @@
 const fs = require('fs/promises');
-const path = './data/products.json';
 
-class Product{
+class Product {
     products = [];
+    path = './data/products.json';
+
     constructor(products=[]){
-        this.products = products
+        this.products = products;
     }
-/*     saveJSON2(){
-        const data = JSON.stringify( this.products, null, 2 );
-        fs.writeFile(path, data).then( (r)=> {
-            console.log('Archivo guardado')
-        }).catch( (error) => console.error(error))
-    } */
+
     async saveJSON(){
-        const data = JSON.stringify( this.products, null, 2);
-        await  fs.writeFile(path, data);
+        const data = JSON.stringify( this.products, null, 2 );
+        try {
+            await fs.writeFile(this.path, data);
+            console.log('Datos Guardados')
+        } catch (error) {
+            console.error('No se guardo el JSON ');
+        }
     }
     async readJSON(){
-        const data = await fs.readFile(path);
-        const products = JSON.parse(data);
-        return products;
+        try {
+            const data = await fs.readFile(this.path);
+            return JSON.parse( data );
+        } catch (error) {
+            console.error('No se pudimos leer el JSON ');
+        }
     }
-    addProduct(product){
-        // Validar datos!
+    // Agrega un producto al array
+    addProduct( product ){
         const id = crypto.randomUUID();
-        product.id = id;
-        this.products.push(product);
+        this.products.push({
+            id: id,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            stock: product.stock
+        })
         this.saveJSON();
     }
+    // Retorna la lista de productos
     async getProducts(){
-        this.products = await this.readJSON();
-        return this.products
+        const products = await this.readJSON();
+        return products;
     }
-
-    getProductById(id){
-        return
+    async getProductById(id){
+        const products = await this.readJSON();
+        const res = products.find( item => item.id == id);
+        return res ? res : 'Not found';
+    }
+    async deleteProductById(id){
+        // leemos el JSON local
+        this.products = await this.readJSON();
+        // Buscamos el elemento
+        const index = this.products.findIndex( product => product.id == id);
+        // Eliminamos el elemento del array
+        if( index == -1){
+            return 'Not Found';
+        }else {
+            this.products.splice(index, 1);
+            await this.saveJSON();
+            return index;
+        }
     }
 }
 

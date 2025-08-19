@@ -1,31 +1,29 @@
-const Product = require('./Product');
-
+const Product = require('./Product.js');
 const model = new Product();
-
-model.addProduct ( {
-    name: 'Teclado dos',
-    description: 'Teclado Mecánico',
-    price: 25000,
-    stock: 25
-});
-/* 
-model.addProduct ( {
-    name: 'Mouse',
-    description: 'Mouse',
-    price: 15000,
-    stock: 20
-}); */
-
-const mostarProductos = async () => {
-    const products = await model.getProducts();
-    console.log('Con Asyn Await');
-    console.table(products);
-}
-
-mostarProductos();
-
-model.getProducts().then( data => {
-    console.log('Con Promesa');
-    console.table(data)
+model.getProducts().then( lista => {
+    console.table(lista);
 })
 
+model.deleteProductById('8d0ffe35-d600-45b3-a10a-fb0597791bf4').then( product => {
+    console.log(product);
+})
+
+
+/* model.addProduct({
+    name: 'Teclado Mec',
+    description: 'Teclado RGB',
+    price: 15000,
+    stock: 5
+})
+model.addProduct({
+    name: 'Mouse',
+    description: 'Gamer',
+    price: 12000,
+    stock: 20
+})
+model.addProduct({
+    name: 'Web Cam',
+    description: 'HD',
+    price: 30000,
+    stock: 50
+}) */
