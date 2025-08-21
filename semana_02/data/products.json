@@ -19,5 +19,12 @@
     "description": "HD",
     "price": 30000,
     "stock": 50
+  },
+  {
+    "id": "ecbec5c5-c6a3-44b7-9077-e2f3f0a34a51",
+    "name": "Hola!",
+    "description": "HD",
+    "price": 30000,
+    "stock": 50
   }
 ]
