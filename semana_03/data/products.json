@@ -15,16 +15,15 @@
   },
   {
     "id": "ecbec5c5-c6a3-44b7-9077-e2f3f0a34a5e",
-    "name": "Web Cam",
-    "description": "HD",
-    "price": 30000,
-    "stock": 50
+    "name": "Web Cam Logi",
+    "description": "HD 1080p",
+    "price": 50000,
+    "stock": 20
   },
   {
-    "id": "ecbec5c5-c6a3-44b7-9077-e2f3f0a34a51",
-    "name": "Hola!",
-    "description": "HD",
-    "price": 30000,
-    "stock": 50
+    "id": "68d0ad25-3b9c-413f-a1c7-3736f5995ec6",
+    "name": "Memoria MicroSD",
+    "price": 7800,
+    "stock": 15
   }
 ]

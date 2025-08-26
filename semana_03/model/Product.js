@@ -18,15 +18,12 @@ class Product {
         }
     }
     async readJSON(){
-        try {
-            const data = await fs.readFile(this.path);
-            return JSON.parse( data );
-        } catch (error) {
-            console.error('No se pudimos leer el JSON ');
-        }
+        const data = await fs.readFile(this.path);
+        return JSON.parse( data );
     }
     // Agrega un producto al array
-    addProduct( product ){
+    async addProduct( product ){
+        this.products = await this.readJSON();
         const id = crypto.randomUUID();
         this.products.push({
             id: id,
@@ -36,6 +33,7 @@ class Product {
             stock: product.stock
         })
         this.saveJSON();
+        return id;
     }
     // Retorna la lista de productos
     async getProducts(){
