@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "juanito"
+  },
+  {
+    "id": "ef9a7e13-b003-4c77-a04c-0f1e98037d7f",
+    "name": "Facundo",
+    "email": "facu@gamil.com",
+    "password": "1234"
+  },
+  {
+    "id": "333e81c7-6a4b-446b-be99-ffc43e68acd4",
+    "name": "Facundo",
+    "email": "facu@gamil.com",
+    "password": "1234"
+  },
+  {
+    "id": "da8d1bcc-809a-458f-942e-4cd65a47c9e8",
+    "name": "Tomás",
+    "email": "tomas@gamil.com",
+    "password": "1234abc"
+  }
+]
