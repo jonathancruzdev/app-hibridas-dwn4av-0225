@@ -19,15 +19,6 @@ app.get('/', (req, res) => {
     res.send('<h1>API REST </h1>');
 })
 
-app.get('/api/users', (req, res) => {
-    const users = [
-        { id:1, name: "Jonathan", email: "jonathan@gamil.com"},
-        { id:2, name: "Josefina", email: "josefina@gamil.com"},
-        { id:3, name: "Julieta", email: "julieta@gamil.com"},
-    ];
-    res.status(200).json( users);
-})
-
 routerAPI(app);
 
 app.listen( PORT, () => {

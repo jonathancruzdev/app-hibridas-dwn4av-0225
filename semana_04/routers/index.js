@@ -1,6 +1,7 @@
+import userRouter from './userRouter.js';
 
 const routerAPI = ( app) =>{
-    console.log('Router API');
+    app.use('/api/users', userRouter);
 }
 
 export default routerAPI;
