@@ -1,3 +1,4 @@
+import UserModel from "../models/userModel.js";
 
 const postUser =  async ( req, res ) => {
     try {
@@ -7,8 +8,13 @@ const postUser =  async ( req, res ) => {
             return;
         }
 
-        const id = crypto.randomUUID();
-        res.status(200).json({ msg: 'ok', id });
+        const user = new UserModel({ name, email, password });
+
+        const data = await user.save();
+
+        console.log(data);
+
+        res.status(201).json({ msg: 'ok', data });
 
 
     } catch (error) {
