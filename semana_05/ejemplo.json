@@ -1,0 +1,43 @@
+[
+  {
+    "id": "bc2c80a2-3e84-4138-8c6a-caa487904141",
+    "name": "Teclado Mec",
+    "description": "Teclado RGB",
+    "price": 15000,
+    "foto": "teclado.jpg",
+    "stock": 5
+  },
+  {
+    "id": "8d0ffe35-d600-45b3-a10a-fb0597791bf4",
+    "name": "Mouse",
+    "description": "Gamer",
+    "destacada": "mouse1.jpg",
+    "fotos": ["foto1.jpg", "foto2.jpg", "foto2.jpg"],
+    "price": 12000,
+    "stock": 20
+  },
+  {
+    "id": "ecbec5c5-c6a3-44b7-9077-e2f3f0a34a5e",
+    "name": "Web Cam Logi",
+    "description": "HD 1080p",
+    "price": 50000,
+    "stock": 20
+  },
+  {
+    "id": "68d0ad25-3b9c-413f-a1c7-3736f5995ec6",
+    "name": "Memoria MicroSD",
+    "price": 7800,
+    "pic": "foto",
+    "stock": 15,
+    "category": "Camaras",
+    "otro": {
+        "data1": 2,
+        "array": [ true, false, true]
+    }
+  },
+  {
+    "name": "Rocio",
+    "email": "rocio@dv.edu.ar",
+    "password": "1234"
+  }
+]
