@@ -8,13 +8,15 @@ import {
     auth 
 } from '../controllers/userController.js';
 
+import { validarToken } from "../middlewares/auth.js"
+
 const router = express.Router();
 
 router.post('/auth', auth);
 router.get('/', getUsers);
 router.get('/:id', getUserById);
 router.post('/', postUser);
-router.delete('/:id', deleteUserById);
-router.put('/:id', updateUserById);
+router.delete('/:id', validarToken, deleteUserById);
+router.put('/:id', validarToken, updateUserById);
 
 export default router;

@@ -64,14 +64,14 @@ const postUser =  async ( req, res ) => {
             res.status(400).json({ msg: 'El email ya existe' });
             return;
         }
-        console.log( userData);
 
         const hash = await bcrypt.hash(password, salt );
         
         // Verificar si existe el email en db
         const user = new UserModel({ name, email, password:hash });
+
         const data = await user.save();
-        res.status(201).json({ msg: 'ok', data });
+        res.status(201).json({ msg: 'ok', data:{ id: data._id, created: data.created} });
 
     } catch (error) {
         console.error(error);
@@ -124,12 +124,12 @@ const deleteUserById = async ( req, res) => {
 const updateUserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, password } = req.body;
+        const { name, password, userId } = req.body;
         if( !name || !password ){
             res.status(400).json({ msg: 'Faltan campos obligatorios'})
             return;
         }
-
+        console.log('El usuario que actualizo es ', userId )
         const hash = await bcrypt.hash(password, salt );
 
         const user = await UserModel.findByIdAndUpdate(id, {name, password: hash});

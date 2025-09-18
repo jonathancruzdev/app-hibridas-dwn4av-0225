@@ -19,11 +19,11 @@ const app = express();
 app.use(  express.json() );
 app.use('/', express.static('public'));
 
-app.use( (req, res, next) => {
+/* app.use( (req, res, next) => {
     console.log('Estoy interceptando todo 🚨');
     next();
 })
-
+ */
 app.get('/', (req, res) => {
     res.send('<h1>API REST </h1>');
 })
