@@ -10,3 +10,4 @@ En Vue          React
 
 {{ var }}                           -> { }
 <h4 v-bind:title="apellido" ></h4>  -> { }
+v-if & v-else                       -> ? : 
