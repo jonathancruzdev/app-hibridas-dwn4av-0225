@@ -6,6 +6,8 @@ import Card from './components/Card.jsx'
 import Container from './components/Container.jsx'
 function App() {
 
+  const carrito = ['PHP', 'SQL'];
+
   const redes = [
     {id:1, nombre: 'Instagram', url:'http://instagram.com'},
     {id:2, nombre: 'GitHub', url:'http://github.com'},
@@ -19,14 +21,26 @@ function App() {
     { id: 4, nombre: 'CSS', descripcion: 'Layout con Flexbox'},
   ]
 
+  function addToCart(data){
+    console.log(data)
+    console.log('Evento del Padre');
+    carrito.push({ id: data.id, nombre: data.nombre});
+    console.log(carrito);
+  }
+
+
   return (
     <>
         <Header titulo='Cursos' />
+        <h4>🛒 { carrito.length} </h4>
         <main>
           <Container>
+         
             {
-              cursos.map( curso => <Card 
-                                      key={curso.id} 
+              cursos.map( curso => <Card
+                                      addToCart={ addToCart } 
+                                      key={curso.id}
+                                      id={curso.id}
                                       nombre={curso.nombre} 
                                       descripcion={curso.descripcion} 
                                     />)
