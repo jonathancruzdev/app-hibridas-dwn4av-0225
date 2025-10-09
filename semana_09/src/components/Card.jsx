@@ -9,9 +9,16 @@ console.log( js, logo2)
 function Card( {id, nombre, descripcion, addToCart } ){
 
   const [ texto, setTexto ] = useState(descripcion);
+  const [ esMinuscula, setEsMinuscula ] = useState(true);
 
   function convertir(){
-    setTexto(  texto.toUpperCase() );
+    if( esMinuscula){
+      setTexto(  texto.toUpperCase() );
+    } else {
+      setTexto(  texto.toLowerCase())
+    }
+
+    setEsMinuscula( !esMinuscula);
   }
 
   function addCart(){
@@ -23,7 +30,7 @@ function Card( {id, nombre, descripcion, addToCart } ){
     <div className='card'>
       <h4> { nombre }</h4>
       <strong>{ texto }</strong>
-      <button onClick={ convertir } type="button">Ver</button>
+      <button onClick={ convertir } type="button">🔎</button>
       <button onClick={ () => addCart() } type="button"> 🛒 </button>
     </div>
   )
