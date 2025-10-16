@@ -3,4 +3,5 @@
 - Componentes
 - Props
 - children
-- eventos
+- eventos (En vue v-on  @ )
+- Estados

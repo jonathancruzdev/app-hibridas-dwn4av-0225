@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import './App.css'
 import Footer from './components/Footer'
@@ -5,7 +6,15 @@ import Header from './components/Header'
 import Nav from './components/Nav'
 import TasksContainer from './components/TasksContainer'
 import Task from './components/Task'
+
+
 function App() {
+  /* A modo de ejemplo */
+  const Home = () => <h1>Home</h1>;
+  const Login = () => <h1>Login</h1>;
+  const Register = () => <h1>Register</h1>;
+
+
   const usuario = 'Jonathan';
   const lista = [
         {_id:1, descripcion: 'Pasear el Perro', fecha: '14-10-2025'},
@@ -73,6 +82,26 @@ function App() {
 
   return (
     <>
+      <BrowserRouter>
+        <>
+          <nav>
+            <ul>
+              <li> <Link to="/">Home </Link></li>
+              <li><Link to="/login">Login</Link></li>
+              <li><Link to="/register">Register</Link></li>
+            </ul>
+          </nav>
+
+          <Routes>
+            <Route path='/' element={ <Home />}></Route>
+            <Route path='/register' element={< Register />}></Route>
+            <Route path='/login' element={ <Login />}></Route>
+
+          </Routes>
+
+        </>
+      </BrowserRouter>
+
       <Header>
         <Nav usuario={usuario} />
       </Header>
