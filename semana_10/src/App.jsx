@@ -15,8 +15,28 @@ function App() {
   ];
   const [ tasks, setTasks ] = useState(lista);
   const [ descripcion, setDescripcion] = useState('');
+  const [contador, setContador ] = useState(0);
 
   const endPoint = 'http://localhost:3000/api/tasks';
+
+  const postTask = async ( task ) => {
+
+    const option = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( task)
+    }
+
+    const resp = await fetch(endPoint, option);
+    if( resp.ok ){
+      console.log(resp);
+      const data = await resp.json();
+      return data.data;
+    }
+
+  }
 
   // setInterval( () => {}, 1000)
   useEffect( ()=> {
@@ -31,17 +51,24 @@ function App() {
     })
   }, [] )
 
+  
  
-  const manejadorSubmit  = ( e ) => {
+  const manejadorSubmit  =  async ( e ) => {
     e.preventDefault();
-    const fecha = new Date().toLocaleDateString();
-    const _id = tasks.length + 1;
-    const nueva = { _id, descripcion, fecha };
-   
-    setTasks( [ ...tasks, nueva ]  )
-    console.table( tasks);
-    setDescripcion('');
+    try {
+      const {_id, fecha } = await postTask( { descripcion}  );
+      const nueva = { _id, descripcion, fecha };
+        
+      setTasks( [ ...tasks, nueva ]  )
+      console.table( tasks);
+      setDescripcion('');
+    } catch (error) {
+      console.log(error)
+      alert('Tenemos un error')
+    }
+
   }
+
 
 
   return (
@@ -58,6 +85,8 @@ function App() {
             placeholder='Nueva tarea'
             required/>
           <button type='submit'> <i className="fa-solid fa-circle-plus"></i> Nueva</button>
+          <h4>{ contador }</h4>
+          <button onClick={  () => setContador(  contador + 1 )  } type='button'>+</button>
         </form>
           <TasksContainer>
             {
