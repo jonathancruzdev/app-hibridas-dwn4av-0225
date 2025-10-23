@@ -6,7 +6,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [ user, setUser ] = useState({ email: '', password: ''});
     const [ error, setError ] = useState( false);
-    // solo ingresa a la Home con el user admin y el email admin@dv.edu.ar
+    // solo ingresa a la Home con el email === 'admin@dv.edu.ar' && password === 'admin'
     const handleSubmit = (e) =>{
         e.preventDefault();
         console.log('Login');
