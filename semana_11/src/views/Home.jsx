@@ -1,15 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 
+import FormTask from '../components/FormTask'
 import TasksContainer from '../components/TasksContainer'
 import Task from '../components/Task'
 
 
 const Home = () => {
-
   const [ tasks, setTasks ] = useState([]);
-  const [ descripcion, setDescripcion] = useState('');
-
   const endPoint = 'http://localhost:3000/api/tasks';
 
   const postTask = async ( task ) => {
@@ -42,13 +40,13 @@ const Home = () => {
     })
   }, [] )
 
-  const manejadorSubmit  =  async ( e ) => {
-    e.preventDefault();
+  const agregarTarea = async ( msg ) => {
+    console.log({msg })
+    const descripcion  = msg; 
     try {
       const {_id, fecha } = await postTask( { descripcion}  );
       const nueva = { _id, descripcion, fecha };
       setTasks( [ ...tasks, nueva ]  )
-      setDescripcion('');
     } catch (error) {
       console.log(error)
       alert('Tenemos un error')
@@ -57,7 +55,8 @@ const Home = () => {
 
   return (
     <main className='container'>
-        <form onSubmit={ manejadorSubmit }>
+      <FormTask onAdd={ agregarTarea } />
+{/*         <form onSubmit={ manejadorSubmit }>
           <input 
             value={descripcion}
             onChange={ ( e ) => setDescripcion(e.target.value)  } 
@@ -66,6 +65,7 @@ const Home = () => {
             required/>
           <button type='submit'> <i className="fa-solid fa-circle-plus"></i> Nueva</button>
         </form>
+         */}
           <TasksContainer>
             {
               tasks.map( task => <Task key={task._id} descripcion={ task.descripcion} fecha={task.fecha} />)
