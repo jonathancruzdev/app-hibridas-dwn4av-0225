@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Alert from '../components/Alert'
+import { AuthContext } from '../context/AuthContext'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -8,16 +9,16 @@ const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
 
+    const { login } = useContext( AuthContext);
+
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
-            //const endPoint = 'https://apitask-2.onrender.com/api/users/auth';
             const endPoint = 'http://127.0.0.1:3000/api/users/auth';
             const user = {
                 email: emailRef.current.value,
                 password: passwordRef.current.value
             }
-            console.log( user);
 
             const option = {
                 method: 'POST',
@@ -32,15 +33,15 @@ const Login = () => {
 
             if(  json.data ) {
                 const jwt = json.data;
-                localStorage.setItem('jwt', jwt);
+                console.table(jwt)
+                login('usuario', jwt);
                 navigate('/tasks');
             } else {
                 alert('Credenciales invalidas');
             }
-            console.log( json );
 
         } catch (error) {
-            
+            console.error({ error });
         } finally {
 
         }

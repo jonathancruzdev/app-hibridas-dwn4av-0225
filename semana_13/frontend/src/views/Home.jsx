@@ -1,6 +1,6 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
 
 import FormTask from '../components/FormTask'
 import TasksContainer from '../components/TasksContainer'
@@ -9,21 +9,18 @@ import Task from '../components/Task'
 
 const Home = () => {
   const [ tasks, setTasks ] = useState([]);
-  //const endPoint = 'https://apitask-2.onrender.com/api/tasks';
   const endPoint = 'http://127.0.0.1:3000/api/tasks'
   const navigate = useNavigate();
 
-  const jwt = localStorage.getItem('jwt');
-  if( !jwt){
-    navigate('/');
-  }
+  const { token } = useContext( AuthContext);
 
-
+  console.log( { token });
   const postTask = async ( task ) => {
     const option = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify( task )
     }
@@ -36,12 +33,20 @@ const Home = () => {
 
   }
 
-  // setInterval( () => {}, 1000)
   useEffect( ()=> {
-  fetch(endPoint).then( resp => resp.json())
+
+    const option = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }
+
+  fetch(endPoint, option).then( resp => resp.json())
     .then( json => {
         const { data } = json; 
-      
+        console.log( data)
         setTasks(data);
     }).catch( error => {
         alert('Error del servidor');
@@ -51,10 +56,10 @@ const Home = () => {
 
   const agregarTarea = async ( msg ) => {
     console.log({msg })
-    const descripcion  = msg; 
+    const description  = msg; 
     try {
-      const {_id, fecha } = await postTask( { descripcion}  );
-      const nueva = { _id, descripcion, fecha };
+      const {_id, created } = await postTask( { description}  );
+      const nueva = { _id, description, created };
       setTasks( [ ...tasks, nueva ]  )
     } catch (error) {
       console.log(error)
@@ -77,7 +82,7 @@ const Home = () => {
          */}
           <TasksContainer>
             {
-              tasks.map( task => <Task key={task._id} descripcion={ task.descripcion} fecha={task.fecha} />)
+              tasks.map( task => <Task key={task._id} descripcion={ task.description} fecha={task.created} />)
             }
           </TasksContainer>
     </main>
