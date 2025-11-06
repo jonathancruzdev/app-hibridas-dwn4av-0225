@@ -4,8 +4,7 @@ import Alert from '../components/Alert';
 import Loading from '../components/Loading';
 const Register = () => {
 
-  // const endPoint = 'https://apitask-2.onrender.com/api/users';
-  const endPoint = 'http://127.0.0.1:3000/api/tasks/api/users';
+  const endPoint = 'http://127.0.0.1:3000/api/users';
 
   const [ error, setError ] = useState( false);
   const [ msgError, setMsgError ] = useState('');

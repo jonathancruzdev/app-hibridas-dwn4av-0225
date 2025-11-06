@@ -11,10 +11,8 @@ const Home = () => {
   const [ tasks, setTasks ] = useState([]);
   const endPoint = 'http://127.0.0.1:3000/api/tasks'
   const navigate = useNavigate();
+  const { token } = useContext( AuthContext );
 
-  const { token } = useContext( AuthContext);
-
-  console.log( { token });
   const postTask = async ( task ) => {
     const option = {
       method: 'POST',
@@ -30,6 +28,32 @@ const Home = () => {
       const data = await resp.json();
       return data.data;
     }
+  }
+
+  const handleDeleteTask = async ( _id) => {
+    console.log(`Eliminado tarea ${_id}`)
+    const option = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }
+
+    try {
+      const resp = await fetch( `${endPoint}/${_id}`, option);
+      if( resp.ok ){
+        const data = await resp.json();
+        console.log(data);
+        // Actualizamos el estado sin la tarea eliminada
+        setTasks(  tasks.filter( task => task._id != _id) );
+
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error del Servidor al Eliminar la tarea :(');
+    }
+
 
   }
 
@@ -70,19 +94,16 @@ const Home = () => {
   return (
     <main className='container'>
       <FormTask onAdd={ agregarTarea } />
-{/*         <form onSubmit={ manejadorSubmit }>
-          <input 
-            value={descripcion}
-            onChange={ ( e ) => setDescripcion(e.target.value)  } 
-            type="text" 
-            placeholder='Nueva tarea'
-            required/>
-          <button type='submit'> <i className="fa-solid fa-circle-plus"></i> Nueva</button>
-        </form>
-         */}
           <TasksContainer>
             {
-              tasks.map( task => <Task key={task._id} descripcion={ task.description} fecha={task.created} />)
+              tasks.map( task => <Task 
+                          key={task._id}
+                          _id={task._id} 
+                          descripcion={ task.description} 
+                          fecha={task.created} 
+                          usuario={task.user} 
+                          eliminarTarea={ handleDeleteTask }
+                          />)
             }
           </TasksContainer>
     </main>

@@ -26,7 +26,6 @@ const postUser = async(req, res) => {
     }
 
     const passwordHash = await bcrypt.hash( password, 10);
-
     const user = new User( { name, email, password: passwordHash });
     console.log( {user});
     await user.save();
@@ -34,26 +33,41 @@ const postUser = async(req, res) => {
         msg: 'User Registrado', 
         data: {_id: user._id, fecha: user.created } 
     });
-
-
 }
 
-const auth = async(req, res) => {
+
+const deleteUser = async( req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await User.findByIdAndDelete( id );
+        if( !result) {
+            return res.status(404).json( { msg: 'No se encontro el usuario', data: {}})
+        }
+
+        res.status(200).json({msg: 'Usuario eliminado'})
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Tenemos un error en el servidor'});
+    }
+}
+
+const login = async(req, res) => {
     try {
         const { email, password } = req.body;
         const usuario = await User.findOne({email});
         if(!usuario){
-            res.status(404).json({msg:'El email no existe'});
-            return;
+            return res.status(404).json({msg:'El email no existe'});
         }
         const status = await bcrypt.compare(password, usuario.password);
         if( !status){
-            res.status(404).json({msg: 'Clave invalida'});
-            return;
+            return res.status(404).json({msg: 'Clave invalida'});
         }
         const payload = {
             id: usuario._id,
-            name: usuario.name
+            name: usuario.name,
+            rol: usuario.rol
         }
         const jwt = jsonwebtoken.sign( payload, SECRET_KEY, { expiresIn: '1h'} );
         res.json({msg: 'Credenciales correctas', data: jwt});
@@ -63,4 +77,4 @@ const auth = async(req, res) => {
     }
 }
 
-export { getUsers, postUser, auth}
+export { getUsers, postUser, deleteUser, login}

@@ -14,16 +14,14 @@ const auth = (req, res, next ) => {
     // Verificamos el token
     try {
         const payload = jwt.verify( token, SECRET_KEY );
-        const { id, name } = payload;
-        req.user = { id, name };
+        const { id, name, rol } = payload;
+        req.user = { id, name, rol };
         next();
 
     } catch (error) {
         console.error(error);
         return res.status(401).json({ msg: 'Token Invalido'});
     }
-
 }
-
 
 export default auth;
