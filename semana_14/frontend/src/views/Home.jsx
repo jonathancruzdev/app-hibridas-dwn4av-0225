@@ -10,8 +10,7 @@ import Task from '../components/Task'
 const Home = () => {
   const [ tasks, setTasks ] = useState([]);
   const endPoint = 'http://127.0.0.1:3000/api/tasks'
-  const navigate = useNavigate();
-  const { token } = useContext( AuthContext );
+  const { token, user } = useContext( AuthContext );
 
   const postTask = async ( task ) => {
     const option = {
@@ -71,7 +70,6 @@ const Home = () => {
     .then( json => {
         const { data } = json;
         if( data ){
-          console.log( data)
           setTasks(data);
         } 
 
@@ -86,7 +84,7 @@ const Home = () => {
     const description  = msg; 
     try {
       const {_id, created } = await postTask( { description}  );
-      const nueva = { _id, description, created };
+      const nueva = { _id, description, created, user };
       setTasks( [ ...tasks, nueva ]  )
     } catch (error) {
       console.log(error)

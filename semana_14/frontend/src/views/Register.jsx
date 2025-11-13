@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Alert from '../components/Alert';
 import Loading from '../components/Loading';
 const Register = () => {
-
+  const navigate = useNavigate(); 
   const endPoint = 'http://127.0.0.1:3000/api/users';
 
   const [ error, setError ] = useState( false);
@@ -37,7 +37,7 @@ const Register = () => {
     return null;
   }
 
-  const onSubmit = async ( event ) => {
+const onSubmit = async ( event ) => {
   event.preventDefault();
   const error = validar();
   console.log(error);
@@ -78,6 +78,7 @@ const Register = () => {
     console.log(data);
 
     setForm( {nombre: '', email: '', password1: '', password2: ''} );
+    navigate('/')
   } catch (error) {
     setError( true);
     setMsgError(' Ocurrio un error al registrar el usuario :(');

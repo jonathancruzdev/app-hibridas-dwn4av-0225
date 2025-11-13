@@ -11,6 +11,20 @@ const getUsers = async ( req, res) => {
     res.status(200).json({msg:'ok', data: users});
 }
 
+const getUserById = async( req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await User.findById( id );
+        if( !result) {
+            return res.status(404).json( { msg: 'No se encontro el usuario', data: {}})
+        }
+        res.status(200).json({msg: 'ok', data: result})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Tenemos un error en el servidor'});
+    }
+}
+
 const postUser = async(req, res) => {
     const { name, email, password } = req.body;
     if( !name) {
@@ -27,7 +41,6 @@ const postUser = async(req, res) => {
 
     const passwordHash = await bcrypt.hash( password, 10);
     const user = new User( { name, email, password: passwordHash });
-    console.log( {user});
     await user.save();
     res.status(202).json({
         msg: 'User Registrado', 
@@ -73,4 +86,4 @@ const login = async(req, res) => {
     }
 }
 
-export { getUsers, postUser, deleteUser, login}
+export { getUsers, getUserById, postUser, deleteUser, login}

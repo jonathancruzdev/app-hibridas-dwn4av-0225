@@ -54,8 +54,11 @@ const putTask = async ( req, res) => {
         const _id = req.params.id;
         const user = req.user.id;
         const { description, completed } = req.body;
+
+        const filter = req.user.rol === 'admin' ? { _id } : {_id, user};
+
         const task = await Task.findOneAndUpdate(
-            { _id, user }, 
+            filter, 
             { 
                 ... ( description != undefined ? { description }: {}), 
                 ... ( completed != undefined ? { completed }: {}) 

@@ -9,6 +9,8 @@ import Home from './views/Home';
 import UsersABM from './views/UsersABM';
 import Details from './views/Details';
 import NotFound from './views/NotFound';
+import TaskEdit from './views/TaskEdit';
+import UserEdit from './views/UserEdit';
 
 import ProtectedRoute from './auth/ProtectedRoute';
 
@@ -29,7 +31,19 @@ function App() {
               } />
 
               <Route path='/tasks/:id' element={ <Details /> } />
+
+              <Route path='/tasks/:id/edit' element={
+                <ProtectedRoute>
+                  <TaskEdit />
+                </ProtectedRoute>
+               } />
+
               <Route path='/users' element={ <UsersABM />} />
+               <Route path='/users/:id/edit' element={
+                <ProtectedRoute>
+                  <UserEdit />
+                </ProtectedRoute>
+               } />
               <Route path='*' element={ <NotFound />} /> 
             </Route>
           </Routes>
